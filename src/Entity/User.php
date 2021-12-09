@@ -82,20 +82,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $posts;
 
-    /**
-     * @Vich\UploadableField(mapping="user_image", fileNameProperty="imageName")
-     * 
-     * @var File|null
-     */
-    private $imageFile;
-
-    /**
-     * @ORM\column(type="string")
-     * 
-     * var string|null
-     */
-    private $imageName;
-
     public function __construct()
     {
         $this->posts = new ArrayCollection();
@@ -306,7 +292,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getImageFile(): ?string
+/*     public function getImageFile(): ?string
     {
         return $this->imageFile;
     }
@@ -332,5 +318,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->imageName = $imageName;
 
         return $this;
-    }
+    } */
 }

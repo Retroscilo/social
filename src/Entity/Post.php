@@ -40,20 +40,6 @@ class Post
      */
     private $user;
 
-    /**
-     * @Vich\UploadableField(mapping="user_image", fileNameProperty="imageName")
-     * 
-     * @var File|null
-     */
-    private $imageFile;
-
-    /**
-     * @ORM\column(type="string")
-     * 
-     * var string|null
-     */
-    private $imageName;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -107,7 +93,7 @@ class Post
         return $this;
     }
 
-    public function getImageFile(): ?string
+/*     public function getImageFile(): ?string
     {
         return $this->imageFile;
     }
@@ -133,5 +119,5 @@ class Post
         $this->imageName = $imageName;
 
         return $this;
-    }
+    } */
 }
