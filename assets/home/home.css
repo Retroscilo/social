@@ -1,0 +1,12 @@
+.home__container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.home__latestPosts {
+  grid-column-start: 2;
+}
+
+.home__latestUsers {
+  grid-column-start: 1;
+}
