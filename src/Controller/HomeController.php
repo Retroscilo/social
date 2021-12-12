@@ -12,6 +12,7 @@ use App\Repository\UserRepository;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\PostFormType;
+use DateTime;
 
 class HomeController extends AbstractController
 {
@@ -37,6 +38,7 @@ class HomeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $post->setCreatedAt(new DateTime());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($post);
             $entityManager->flush();

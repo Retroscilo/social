@@ -26,7 +26,7 @@ class PostRepository extends ServiceEntityRepository
     public function getLastPosts()
     {
         return $this->createQueryBuilder('p')
-            ->orderBy('p.created_at', 'ASC')
+            ->orderBy('p.created_at', 'DESC')
             ->setMaxResults(2)
             ->getQuery()
             ->getResult()
