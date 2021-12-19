@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 use App\Entity\Post;
 use App\Repository\PostRepository;
@@ -30,12 +31,14 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="app_home")
      */
-    public function index(Request $request): Response
+    public function index(Request $request, AuthenticationUtils $authenticationUtils): Response
     {
         $post = new Post();
         $post->setUser($this->security->getUser());
         $form = $this->createForm(PostFormType::class, $post);
         $form->handleRequest($request);
+        $error = $authenticationUtils->getLastAuthenticationError();
+        $lastUsername = $authenticationUtils->getLastUsername();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $post->setCreatedAt(new DateTime());
@@ -52,7 +55,8 @@ class HomeController extends AbstractController
         return $this->render('home.html.twig', [
             'lastPosts' => $lastPosts,
             'lastUsers' => $lastUsers,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'error' => $error
         ]);
     }
 }

@@ -21,7 +21,8 @@
           <button type="button" class="btn btn-warning">Log out</button>
         </a>
         {% else %}
-        <button id="popover_login" type="button" class="btn btn-outline-light me-2">
+        <button type="button" class="btn btn-outline-light me-2 example-popover" data-bs-container="body"
+          data-bs-toggle="popover" data-bs-placement="bottom">
           Login
         </button>
         <a href="{{path('app_register')}}">
@@ -29,6 +30,7 @@
         </a>
         {% endif %}
       </div>
+
     </div>
   </div>
 </div>

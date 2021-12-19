@@ -27,7 +27,7 @@ security:
             entry_point: form_login
             form_login:
                 login_path: app_login
-                check_path: app_login
+                check_path: app_home
             logout:
                 path: app_logout
                 # where to redirect after logout

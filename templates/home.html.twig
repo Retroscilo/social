@@ -6,6 +6,13 @@
 {% endblock %}
 
 {% block body %}
+{% if error %}
+    <div class="alert alert-danger">
+      <div class="container">
+        {{ error.messageKey|trans(error.messageData, 'security') }}
+      </div>
+    </div>
+{% endif %}
   <div class="home__container container mx-auto">
     <div class="home__latestUsers py-4">
       <h1 class="my-2">Derniers utilisateurs inscrits</h1>
@@ -24,7 +31,10 @@
         {{ include('./_postForm.html.twig') }}
       {% else %}
         <p>Vous devez être connecté pour écrire un post !</p>
-        <button class="btn btn-primary">Login</button>
+        <button type="button" class="btn btn-primary me-2 example-popover" data-bs-container="body"
+          data-bs-toggle="popover" data-bs-placement="left">
+          Login
+        </button>
         <button class="btn btn-secondary">Créer un compte</button>
       {% endif %}
     </div>
