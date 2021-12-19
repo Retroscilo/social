@@ -1,27 +1,59 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}S'inscrire{% endblock %}
 
 {% block body %}
-    {% for flashError in app.flashes('verify_email_error') %}
-        <div class="alert alert-danger" role="alert">{{ flashError }}</div>
-    {% endfor %}
+{% for flashError in app.flashes('verify_email_error') %}
+<div class="alert alert-danger" role="alert">{{ flashError }}</div>
+{% endfor %}
 
-    <h1>Register</h1>
-
+<div class="container mx-auto w-50 my-5" style="max-width: 560px">
+    <h1 class="mb-4">S'inscrire</h1>
     {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.firstname) }}
-        {{ form_row(registrationForm.lastname) }}
-        {{ form_row(registrationForm.birthdate) }}
-        {{ form_row(registrationForm.city) }}
-        {{ form_row(registrationForm.address) }}
-        {{ form_row(registrationForm.internship_description) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
-
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+    <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Email address</label>
+        {{ form_widget(registrationForm.email, { attr: { class: "form-control", type: "email" }}) }}
+        <div id="emailHelp" class="form-text">Nous ne partagerons pas votre email</div>
+    </div>
+    <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Password</label>
+        {{ form_widget(registrationForm.plainPassword, { attr: { class: "form-control", type: "password" }}) }}
+    </div>
+    <div class="mb-3">
+        <label for="firstName" class="form-label">Prénom</label>
+        {{ form_widget(registrationForm.firstname, { attr: { class: "form-control" }}) }}
+    </div>
+    <div class="mb-3">
+        <label for="lastName" class="form-label">Nom</label>
+        {{ form_widget(registrationForm.lastname, { attr: { class: "form-control" }}) }}
+    </div>
+    <div class="mb-3">
+        <label for="birthdate" class="form-label">Date de naissance</label>
+        {{ form_widget(registrationForm.birthdate) }}
+    </div>
+    <div class="mb-3">
+        <label for="formFile" class="form-label">Photo de profil</label>
+        {{ form_widget(registrationForm.imageFile, {  attr: { class: 'form-control' } }) }}
+    </div>
+    <div class="mb-3">
+        <label for="adress" class="form-label">Adresse</label>
+        {{ form_widget(registrationForm.address, { attr: { class: "form-control" }}) }}
+    </div>
+    <div class="mb-3">
+        <label for="city" class="form-label">City</label>
+        {{ form_widget(registrationForm.city, { attr: { class: "form-control" }}) }}
+    </div>
+    <div class="mb-3">
+        <label for="internship_description" class="form-label">Votre alternance</label>
+        {{ form_widget(registrationForm.internship_description, { attr: { class: "form-control" }}) }}
+    </div>
+    <div class="mb-3 form-check">
+        {{ form_widget(registrationForm.agreeTerms, { attr: { class: "form-check-input", type: "checkbox"} }) }}
+        <label class="form-check-label" for="exampleCheck1">J'ai lu et j'accepte les conditions d'utilisation</label>
+    </div>
+    <div class="d-grid gap-2 col-3 mx-auto">
+        <button type="submit" class="btn btn-primary">S'inscrire</button>
+    </div>
+{{ form_end(registrationForm) }}
+</div>
 {% endblock %}

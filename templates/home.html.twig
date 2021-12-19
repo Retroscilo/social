@@ -4,20 +4,29 @@
 {{ parent() }}
 {{ encore_entry_link_tags('home') }}
 {% endblock %}
+
 {% block body %}
-  <div class="home__container">
-    <div class="home__latestUsers p-4">
-      <h1>Derniers utilisateurs inscrits</h1>
+  <div class="home__container container mx-auto">
+    <div class="home__latestUsers py-4">
+      <h1 class="my-2">Derniers utilisateurs inscrits</h1>
       {% for user in lastUsers %}
         {{ include('./components/userCard.html.twig') }}
       {% endfor %}
+      <h1 class="my-2">Chercher des utilisateurs</h1>
     </div>
-    <div class="home__latestPosts p-4">
-      <h1>Derniers posts</h1>
+    <div class="home__latestPosts py-4">
+      <h1 class="my-2">Derniers posts</h1>
       {% for post in lastPosts %}
         {{ include('./components/post.html.twig') }}
       {% endfor %}
-      {{ include('./_postForm.html.twig') }}
+      <h1 class="my-2">Créer un post</h1>
+      {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        {{ include('./_postForm.html.twig') }}
+      {% else %}
+        <p>Vous devez être connecté pour écrire un post !</p>
+        <button class="btn btn-primary">Login</button>
+        <button class="btn btn-secondary">Créer un compte</button>
+      {% endif %}
     </div>
   </div>
 {% endblock %}

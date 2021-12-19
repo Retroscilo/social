@@ -1,6 +1,16 @@
-<div class="card" style="width: 18rem;">
-  <div class="card-body">
-    <h5 class="card-title">{{ user.firstName }}</h5>
-    <h4 class="card-title">{{ user.lastName}}</h4>
+<div class="card my-1 border" style="width: 18rem;">
+  <div class="card-body container">
+    <div class="row">
+      <div class="col">
+        <h5 class="card-title row px-2">{{ user.firstName }}</h5>
+        <h4 class="card-title row px-2">{{ user.lastName }}</h4>
+        <p class="m-0">{{ user.createdAt|date('d/m/Y') }}</p>
+      </div>
+      <div class="col">
+        {% if user.imageName is not null %}
+        <img src="{{ vich_uploader_asset(user) | imagine_filter('my_thumb') }}" alt="{{ user.firstName }}">
+        {% endif %}
+      </div>
+    </div>
   </div>
 </div>

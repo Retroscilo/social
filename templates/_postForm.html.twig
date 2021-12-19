@@ -1,10 +1,18 @@
 {{ form_start(form) }}
 
-  <div class="row">
-      <div class="col-md-6">{{ form_row(form.name) }}</div>
-      <div class="col-md-6">{{ form_row(form.content) }}</div>
+<form>
+  <div class="mb-3 w-50">
+    <label for="exampleInputEmail1" class="form-label">Titre</label>
+    {{form_widget(form.name, {'attr': { 'class': 'form-control', placeholder: 'titre' }})}}
   </div>
-
-  <button class="btn btn-primary">Valider</button>
+  <div class="mb-3 w-50 h-25">
+    {{form_widget(form.content, { attr: {class: 'form-control', resize: 'false', placeholder: 'contenu'} })}}
+  </div>
+  <div class="mb-3">
+    <label for="formFile" class="form-label">Ajouter une image</label>
+    {{ form_widget(form.imageFile, { attr: { class: 'form-control' } }) }}
+  </div>
+  <button type="submit" class="btn btn-primary">Poster</button>
+</form>
 
 {{ form_end(form) }}

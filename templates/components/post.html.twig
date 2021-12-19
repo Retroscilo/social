@@ -1,9 +1,10 @@
-<div class="card" style="width: 18rem;">
+<div class="card my-1 border w-50" style="width: 18rem;">
   <div class="card-body">
     <h5 class="card-title">{{ post.name }}</h5>
     <p class="card-text">{{ post.content }}</p>
     {% if post.imageName is not null %}
       <img src="{{ vich_uploader_asset(post) | imagine_filter('my_thumb') }}" alt="{{ post.name }}">
     {% endif %}
+    <p>{{ post.user.firstName }}  {{ post.user.lastName }}</p>
   </div>
 </div>

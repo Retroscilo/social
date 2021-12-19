@@ -82,12 +82,32 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $posts;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $created_at;
+
+        /**
+     * NOTE: This is not a mapped field of entity metadata, just a simple property.
+     * 
+     * @Vich\UploadableField(mapping="user_image", fileNameProperty="imageName")
+     * 
+     * @var File|null
+     */
+    private $imageFile;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     *
+     * @var string|null
+     */
+    private $imageName;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
+        $this->setCreatedAt(new \DateTime());
     }
-
-    
 
     public function getId(): ?int
     {
@@ -292,11 +312,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-/*     public function getImageFile(): ?string
+    public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->imageFile;
+        return $this->created_at;
     }
 
+    public function setCreatedAt(\DateTimeInterface $created_at): self
+    {
+        $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    /**
+     *
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $imageFile
+     */
     public function setImageFile(?File $imageFile = null): void
     {
         $this->imageFile = $imageFile;
@@ -308,15 +339,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
     }
 
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageName(?string $imageName): void
+    {
+        $this->imageName = $imageName;
+    }
+
     public function getImageName(): ?string
     {
         return $this->imageName;
     }
-
-    public function setImageName(?string $imageName): self
-    {
-        $this->imageName = $imageName;
-
-        return $this;
-    } */
 }
