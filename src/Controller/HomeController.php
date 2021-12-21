@@ -15,6 +15,8 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Form\PostFormType;
 use DateTime;
 
+use Knp\Component\Pager\PaginatorInterface;
+
 class HomeController extends AbstractController
 {
     private $postRepository;
@@ -34,13 +36,12 @@ class HomeController extends AbstractController
     public function index(Request $request, AuthenticationUtils $authenticationUtils): Response
     {
         $post = new Post();
-        $post->setUser($this->security->getUser());
         $form = $this->createForm(PostFormType::class, $post);
         $form->handleRequest($request);
         $error = $authenticationUtils->getLastAuthenticationError();
-        $lastUsername = $authenticationUtils->getLastUsername();
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
+            $post->setUser($this->security->getUser());
             $post->setCreatedAt(new DateTime());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($post);

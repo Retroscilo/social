@@ -13,8 +13,14 @@ class ProfilController extends AbstractController
      */
     public function index(): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $user = $this->getUser();
+        $lastPosts = $user->getPosts();
+
         return $this->render('profil/index.html.twig', [
             'controller_name' => 'ProfilController',
+            'lastPosts' => $lastPosts
         ]);
     }
 }
