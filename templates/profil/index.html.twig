@@ -4,16 +4,41 @@
 
 {% block body %}
 <div class="container my-4">
-    <h1>Mon profil</h1>
+    <h1 class="my-4">Mon profil</h1>
     <div class="row">
+        <div class="col">
+            <h2>Modifier mon profil</h2>
+            <h3 class="my-3">Nom/prénom</h3>
+            <h4>{{ app.user.firstname }} {{ app.user.lastname }}</h4>
+            <h3 class="my-3">Adresse</h3>
+            <h4>Ville : {{ app.user.city }}</h4>
+            <h4>Adresse : {{ app.user.address }}</h4>
+            <h3 class="mt-4">Photo de profil</h3>
+            <div class="d-flex flex-column w-50">
+                <div class="border d-flex justify-content-center align-items-center my-2 rounded">
+                    {% if user.imageName is not null %}
+                    <img src="{{ vich_uploader_asset(user) | imagine_filter('my_thumb') }}" alt="{{ user.firstName }}">
+                    {% else %}
+                    <img class="w-25 mx-auto my-5" src="social/user_placeholder.svg" alt="">
+                    {% endif %}
+                </div>
+                <button class="btn btn-light">modifier ma photo de profil</button>
+            </div>
+            <h3 class="mt-4">Identifiants</h3>
+            <h4>Adresse e-mail</h4>
+            <p>{{ app.user.email }}</p>
+            <h4>Mot de passe</h4>
+            <button class="btn btn-light">Changer mon mot de passe</button>
+            <h4 class="text-danger mt-4">Danger zone</h4>
+            <a href="{{path('account_delete')}}">
+                <button class="btn btn-danger">Supprimer mon compte</button>
+              </a>
+        </div>
         <div class="col">
             <h2>Mes derniers posts</h2>
             {% for post in lastPosts %}
             {{ include('./components/post.html.twig') }}
             {% endfor %}
-        </div>
-        <div class="col">
-            <h2>Modifier mon profil</h2>
         </div>
     </div>
 </div>

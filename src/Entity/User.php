@@ -103,6 +103,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $imageName;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Groupe::class, inversedBy="user")
+     */
+    private $groupe;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
@@ -352,5 +357,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getImageName(): ?string
     {
         return $this->imageName;
+    }
+
+    public function getGroupe(): ?Groupe
+    {
+        return $this->groupe;
+    }
+
+    public function setGroupe(?Groupe $groupe): self
+    {
+        $this->groupe = $groupe;
+
+        return $this;
     }
 }

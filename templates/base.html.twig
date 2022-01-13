@@ -32,6 +32,8 @@
         <div class="mb-3 form-check">
             <input type="checkbox" class="form-check-input" id="exampleCheck1">
             <label class="form-check-label" for="exampleCheck1">Se souvenir de moi</label>
+            <br>
+            <a href="{{path('app_forgot_password_request')}}">Mot de passe oublié ?</a>
         </div>
         <input type="hidden" name="_csrf_token"
         value="{{ csrf_token('authenticate') }}"

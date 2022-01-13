@@ -21,38 +21,21 @@ class Group
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $name;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $promo;
+    private $groupe_name;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getGroupeName(): ?string
     {
-        return $this->name;
+        return $this->groupe_name;
     }
 
-    public function setName(string $name): self
+    public function setGroupeName(string $groupe_name): self
     {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    public function getPromo(): ?string
-    {
-        return $this->promo;
-    }
-
-    public function setPromo(string $promo): self
-    {
-        $this->promo = $promo;
+        $this->groupe_name = $groupe_name;
 
         return $this;
     }

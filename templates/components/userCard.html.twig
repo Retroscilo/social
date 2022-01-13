@@ -6,9 +6,11 @@
         <h4 class="card-title row px-2">{{ user.lastName }}</h4>
         <p class="m-0">{{ user.createdAt|date('d/m/Y') }}</p>
       </div>
-      <div class="col">
+      <div class="col align-items-center justify-content-center">
         {% if user.imageName is not null %}
-        <img src="{{ vich_uploader_asset(user) | imagine_filter('my_thumb') }}" alt="{{ user.firstName }}">
+        <div class="d-flex align-items-center justify-content-center">
+          <img class="w-75 h-75" src="{{ vich_uploader_asset(user) | imagine_filter('my_thumb') }}" alt="{{ user.firstName }}">
+        </div>
         {% else %}
         <div class="d-flex align-items-center justify-content-center">
           <img class="w-75 h-75 opacity-50" src="social/user_placeholder.svg">

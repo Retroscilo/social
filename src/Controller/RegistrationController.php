@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Groupe;
+use App\Repository\GroupeRepository;
 use App\Form\RegistrationFormType;
+use App\Repository\GroupRepository;
 use App\Security\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -14,14 +17,17 @@ use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class RegistrationController extends AbstractController
 {
     private EmailVerifier $emailVerifier;
+    private GroupeRepository $groupeRepository;
 
-    public function __construct(EmailVerifier $emailVerifier)
+    public function __construct(EmailVerifier $emailVerifier, GroupeRepository $groupeRepository)
     {
         $this->emailVerifier = $emailVerifier;
+        $this->groupeRepository = $groupeRepository;
     }
 
     /**
@@ -30,13 +36,19 @@ class RegistrationController extends AbstractController
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
-        $form = $this->createForm(RegistrationFormType::class, $user);
+
+        $form = $this->createForm(RegistrationFormType::class, $user)
+            ->add('groupe', EntityType::class, [
+                'class' => Groupe::class,
+                'choice_label' => 'groupeName'
+            ]);
         $form->handleRequest($request);
+
 
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
             $user->setPassword(
-            $userPasswordHasher->hashPassword(
+                $userPasswordHasher->hashPassword(
                     $user,
                     $form->get('plainPassword')->getData()
                 )
@@ -46,7 +58,9 @@ class RegistrationController extends AbstractController
             $entityManager->flush();
 
             // generate a signed url and email it to the user
-            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+            $this->emailVerifier->sendEmailConfirmation(
+                'app_verify_email',
+                $user,
                 (new TemplatedEmail())
                     ->from(new Address('social@dc.com', 'social TL network'))
                     ->to($user->getEmail())
@@ -55,6 +69,8 @@ class RegistrationController extends AbstractController
             );
 
             return $this->redirectToRoute('app_home');
+        } else {
+            $this->addFlash('error', 'error');
         }
 
         return $this->render('registration/register.html.twig', [

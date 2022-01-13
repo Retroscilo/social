@@ -8,21 +8,27 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
+
+use App\Repository\UserRepository;
 
 class LoginController extends AbstractController
 {
-    public function __construct(LoggerInterface $logger)
+    private $userRepository;
+
+    public function __construct(LoggerInterface $logger, UserRepository $userRepository)
     {
         $this->logger = $logger;
+        $this->userRepository = $userRepository;
     }
     /**
      * @Route("/login", name="app_login")
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        // if ($this->getUser()) {
-        //     return $this->redirectToRoute('home');
-        // }
+        if ($this->getUser()) {
+            return $this->redirectToRoute('home');
+        }
 
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -38,5 +44,28 @@ class LoginController extends AbstractController
     public function logout(): void
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
+    }
+
+    /**
+     * @Route("/deleteAccount", name="account_delete")
+     */
+    public function deleteAccount(): Response
+    {
+        $currentUserId = $this->getUser()->getId();
+        $session = $this->get('session');
+        $session = new Session();
+        $session->invalidate();
+
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->userRepository->find($currentUserId);
+        $posts = $user->getPosts();
+        foreach($posts as $post)
+        {
+            $em->remove($post);
+        }
+        $em->remove($user);
+        $em->flush();
+
+        return $this->redirectToRoute('app_home');
     }
 }

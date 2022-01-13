@@ -6,13 +6,9 @@
         <title>My Application</title>
     </head>
     <body>
-        <ul>
-        {% for appointment in appointments %}
-            <li>
-                {{ appointment.content }}
-            </li>
+        {% for post in appointments %}
+            {{include('./components/post.html.twig')}}
         {% endfor %}
-        </ul>
         
         <div class="navigation">
             {{ knp_pagination_render(appointments) }}

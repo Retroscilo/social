@@ -6,19 +6,16 @@
   <div class="container">
     <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
       <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-        <li><a href="#" class="nav-link px-2 text-secondary">Home</a></li>
-        <li><a href="#" class="nav-link px-2 text-white">Features</a></li>
-        <li><a href="#" class="nav-link px-2 text-white">Pricing</a></li>
-        <li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>
-        <li><a href="#" class="nav-link px-2 text-white">About</a></li>
+        <li><a href="{{path('app_home')}}" class="nav-link px-2 text-secondary">Home</a></li>
+        <li><a href="{{path('app_users')}}" class="nav-link px-2 text-secondary">Chercher un utlisateur</a></li>
       </ul>
       <div class="text-end">
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-        <a href="">
-          <button type="button" class="btn btn-outline-light me-2">My account</button>
+        <a href="{{path('app_profil')}}">
+          <button type="button" class="btn btn-outline-light me-2">Mon profil</button>
         </a>
         <a href="{{path('app_logout')}}">
-          <button type="button" class="btn btn-warning">Log out</button>
+          <button type="button" class="btn btn-warning">Déconnexion</button>
         </a>
         {% else %}
         <button type="button" class="btn btn-outline-light me-2 example-popover" data-bs-container="body"

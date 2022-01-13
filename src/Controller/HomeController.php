@@ -17,6 +17,7 @@ use App\Form\PostFormType;
 use DateTime;
 
 use Knp\Component\Pager\PaginatorInterface;
+use App\ItemFilterType;
 
 class HomeController extends AbstractController
 {
@@ -67,26 +68,17 @@ class HomeController extends AbstractController
      */
     public function posts(Request $request, PaginatorInterface $paginator): Response
     {
-        $em = $this->getDoctrine()->getManager();
-
-        // Get some repository of data, in our case we have an Appointments entity
         $appointmentsRepository = $this->postRepository;
+        $allAppointmentsQuery = $appointmentsRepository->createQueryBuilder('p');
 
-        // Find all the data on the Appointments table, filter your query as you need
-        $allAppointmentsQuery = $appointmentsRepository->createQueryBuilder('p')
-            ->getQuery();
+        $query = $allAppointmentsQuery->getQuery();
 
-        // Paginate the results of the query
         $appointments = $paginator->paginate(
-            // Doctrine Query, not results
-            $allAppointmentsQuery,
-            // Define the page parameter
+            $query,
             $request->query->getInt('page', 1),
-            // Items per page
             5
-        );
+        ); 
 
-        // Render the twig view
         return $this->render('default/index.html.twig', [
             'appointments' => $appointments
         ]);
