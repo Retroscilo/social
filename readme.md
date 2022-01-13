@@ -21,6 +21,8 @@ Then run:
 - ```php bin/console make:migration```
 - ```php bin/console d:m:m```
 
+If you want to populate the databse with some data, run ```php bin/console doctrine:fixtures:load```
+
 When everything work as expected (hopefully), you can start the servers:
 
 - Front: ```npm run dev```
